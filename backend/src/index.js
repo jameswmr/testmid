@@ -47,10 +47,10 @@ app.get("*", (req, res) => {
   return res.status(404).send();
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-});
 
 process.on("exit", async () => {
   await prisma.$disconnect();
+});
+app.listen(port, () => {
+console.log(`Example app listening at http://localhost:${port}`);
 });
