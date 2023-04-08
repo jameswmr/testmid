@@ -1,7 +1,7 @@
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import services from "../services";
-
+import me from "./me.jpg"
 // you should design your register page and api
 function CreateUserPage() {
   const [formData, setFormData] = useState({ username: "" });
@@ -41,11 +41,11 @@ function CreateUserPage() {
           <div>
             <img
               className="mx-auto h-12 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+              src={me}
               alt="Your Company"
             />
             <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-              Create an account
+              Create an account in B10902063's Website!
             </h2>
           </div>
           <form className="mt-8 space-y-6" onSubmit={handleFormSubmit}>
