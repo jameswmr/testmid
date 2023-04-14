@@ -12,5 +12,13 @@ datasource db {
 
 model User {
   id      Int      @id @default(autoincrement())
-  name    String
+  name    String   @unique
+  password String
+}
+
+model Comment {
+  id Int @id@default(autoincrement())
+  message String
+  createdAt DateTime @default(now())
+  userId    Int
 }

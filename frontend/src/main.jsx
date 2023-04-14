@@ -7,7 +7,8 @@ import "./index.css";
 import UserPage from "./pages/users";
 import CreateUserPage from "./pages/create-user";
 import ErrorPage from "./pages/error-page";
-
+import SignIn from "./pages/signIn";
+import Chat from "./pages/chat";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,6 +27,14 @@ const router = createBrowserRouter([
       {
         path: "/create-user",
         element: <CreateUserPage />,
+      },
+      {
+        path: "/sign-In",
+        element: <SignIn />,
+      },
+      {
+        path: "/chat",
+        element: <Chat />,
       },
     ],
   },

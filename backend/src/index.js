@@ -18,6 +18,7 @@ app.use(express.static(frontendDir));
 if (process.env.NODE_ENV === "production") {
   app.set("trust proxy", 1);
 }
+
 app.use(
   session({
     cookie: {
@@ -47,7 +48,35 @@ app.get("*", (req, res) => {
   return res.status(404).send();
 });
 
+// app.delete("", async (req, res) => {
+//   const { userId } = await prisma.comment.findUnique({
+//     where: { id: req.params.commentId },
+//     select: { userId: true },
+//   })
+//   if (userId !== req.cookies.userId) {
+//     return res.send(
+//       app.httpErrors.unauthorized(
+//         "You do not have permission to delete this message"
+//       )
+//     )
+//   }
 
+//   return await commitToDb(
+//     prisma.comment.delete({
+//       where: { id: req.params.commentId },
+//       select: { id: true },
+//     })
+//   )
+// })
+
+
+
+
+// async function commitToDb(promise) {
+//   const [error, data] = await app.to(promise)
+//   if (error) return app.httpErrors.internalServerError(error.message)
+//   return data
+// }
 process.on("exit", async () => {
   await prisma.$disconnect();
 });

@@ -4,7 +4,7 @@ import services from "../services";
 import me from "./me.jpg"
 // you should design your register page and api
 function CreateUserPage() {
-  const [formData, setFormData] = useState({ username: "" });
+  const [formData, setFormData] = useState({ username: "", password: "" });
   const [message, setMessage] = useState("");
 
   /** @type {React.ChangeEventHandler<HTMLInputElement>} */
@@ -15,15 +15,16 @@ function CreateUserPage() {
       ...prev,
       [name]: value,
     }));
+    console.log(name,value);
   };
-
   /** @type {React.FormEventHandler<HTMLFormElement>} */
   const handleFormSubmit = (event) => {
-    services.user.createOne({ name: formData.username }).then((data) => {
+    services.user.createOne({ name: formData.username, password: formData.password  }).then((data) => {
       setMessage(JSON.stringify(data, null, 2));
     });
-    setFormData({ username: "" });
+    setFormData({ username: "", password: "" });
     event.preventDefault();
+    console.log("handle end");
   };
 
   return (
@@ -65,7 +66,39 @@ function CreateUserPage() {
                 />
               </div>
             </div>
-
+            <div className="-space-y-px rounded-md shadow-sm">
+              <div>
+                <label htmlFor="password" className="sr-only">
+                  Password
+                </label>
+                <input
+                  name="password"
+                  type="password"
+                  required
+                  className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  placeholder="Password"
+                  value={formData.password}
+                  onChange={handleTextInputChange}
+                />
+              </div>
+            </div>
+            {/* <div className="-space-y-px rounded-md shadow-sm">
+              <div>
+                <label htmlFor="file" className="sr-only">
+                  Image
+                </label>
+                <input
+                  name="image"
+                  type="file"
+                  required
+                  className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  placeholder="上傳圖片"
+                  accept=".png, .jpg"
+                  value={formData.file}
+                  onChange={handleTextInputChange}
+                />
+              </div>
+            </div> */}
             <div>
               <button
                 type="submit"
@@ -81,9 +114,10 @@ function CreateUserPage() {
               </button>
             </div>
           </form>
+          <a href="/sign-In">SignIn</a>
         </div>
       </div>
-      <pre>{message}</pre>
+      {/* <pre>{message}</pre> */}
     </>
   );
 }
