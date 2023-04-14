@@ -14,16 +14,22 @@ function chat() {
       [name]: value,
     }));
     console.log(name,value);
-  };
+  };  
+  const [comment, setcomment] = useState([]);
   /** @type {React.FormEventHandler<HTMLFormElement>} */
   const handleFormSubmit = (event) => {
     services.user.post({ message: formData.message  });
     setFormData({ message : ""});
+    useEffect(() => {
+      services.user.getAllComment().then((allComment) => {
+        setcomment(allComment);
+      });
+    }, []);
     event.preventDefault();
     console.log("handle end");
   };
 
-  const [comment, setcomment] = useState([]);
+
   useEffect(() => {
     services.user.getAllComment().then((allComment) => {
       setcomment(allComment);

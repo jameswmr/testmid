@@ -24,6 +24,7 @@ function signIn() {
     services.user.check({ name: formData.username, password: formData.password  }).then((data) => {
       if(data.password === formData.password){
         console.log(data.password);
+        window.location.replace("/chat");
       }
       else{
         console.log("FFFFffff");

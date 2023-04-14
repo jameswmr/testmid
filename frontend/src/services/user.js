@@ -1,4 +1,4 @@
-import { getOneUser } from "../../../backend/src/routes/api/v1/users/handlers";
+
 import api from "./axiosClient";
 
 export const user = {
@@ -16,7 +16,7 @@ export const user = {
     console.log(data);
     return data;
   },
-  async getOneUser({id}){
+  async getUser({id}){
     const {data} = await api.post("/users/name",{id});
     return data;
   },
@@ -25,8 +25,12 @@ export const user = {
     const { data } = await api.post("/users/name", {name, password});
     return data;
   },
-  async post({message}){
-    const { data } = await api.post("/users/chat", {message});
+  async post({message, id}){
+    const { data } = await api.post("/users/chat", {message, id});
+    return data;
+  },
+  async delete({id,userId}){
+    const {data} = await api.post("/users/delete", {id, userId});
     return data;
   },
 };

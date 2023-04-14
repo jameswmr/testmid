@@ -21,4 +21,5 @@ model Comment {
   message String
   createdAt DateTime @default(now())
   userId    Int
+  username String
 }
