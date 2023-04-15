@@ -5,6 +5,7 @@ import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import { prisma } from "./adapters";
 import rootRouter from "./routes";
+import bodyParser from 'body-parser';
 import { csrfErrorHandler, doubleCsrfProtection } from "./csrf";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const frontendDir = path.join(__dirname, "../../frontend/dist");
@@ -34,7 +35,8 @@ app.use(
     saveUninitialized: false,
   })
 );
-
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(doubleCsrfProtection);
@@ -47,36 +49,6 @@ app.get("*", (req, res) => {
   }
   return res.status(404).send();
 });
-
-// app.delete("", async (req, res) => {
-//   const { userId } = await prisma.comment.findUnique({
-//     where: { id: req.params.commentId },
-//     select: { userId: true },
-//   })
-//   if (userId !== req.cookies.userId) {
-//     return res.send(
-//       app.httpErrors.unauthorized(
-//         "You do not have permission to delete this message"
-//       )
-//     )
-//   }
-
-//   return await commitToDb(
-//     prisma.comment.delete({
-//       where: { id: req.params.commentId },
-//       select: { id: true },
-//     })
-//   )
-// })
-
-
-
-
-// async function commitToDb(promise) {
-//   const [error, data] = await app.to(promise)
-//   if (error) return app.httpErrors.internalServerError(error.message)
-//   return data
-// }
 process.on("exit", async () => {
   await prisma.$disconnect();
 });

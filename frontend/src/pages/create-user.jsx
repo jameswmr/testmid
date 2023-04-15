@@ -4,7 +4,7 @@ import services from "../services";
 import me from "./me.jpg"
 // you should design your register page and api
 function CreateUserPage() {
-  const [formData, setFormData] = useState({ username: "", password: "" });
+  const [formData, setFormData] = useState({ username: "", password: "", image:"" });
   const [message, setMessage] = useState("");
 
   /** @type {React.ChangeEventHandler<HTMLInputElement>} */
@@ -19,14 +19,27 @@ function CreateUserPage() {
   };
   /** @type {React.FormEventHandler<HTMLFormElement>} */
   const handleFormSubmit = (event) => {
-    services.user.createOne({ name: formData.username, password: formData.password  }).then((data) => {
+    services.user.createOne({ name: formData.username, password: formData.password, image: formData.image  }).then((data) => {
       setMessage(JSON.stringify(data, null, 2));
     });
     setFormData({ username: "", password: "" });
     event.preventDefault();
     console.log("handle end");
   };
+  function handleImageInputChange(event) {
+    const reader = new window.FileReader();
 
+    reader.readAsDataURL(event.target.files[0]);
+
+    reader.onload = () => {
+      const Base64Data = reader.result;  // reader.result 就是转成base64的数据
+      setFormData((prev) => ({
+        ...prev,
+        ["image"]: Base64Data,
+      }));
+      console.log(Base64Data);
+    };
+  }
   return (
     <>
       {/*
@@ -82,23 +95,12 @@ function CreateUserPage() {
                 />
               </div>
             </div>
-            {/* <div className="-space-y-px rounded-md shadow-sm">
-              <div>
-                <label htmlFor="file" className="sr-only">
-                  Image
-                </label>
-                <input
-                  name="image"
-                  type="file"
-                  required
-                  className="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  placeholder="上傳圖片"
-                  accept=".png, .jpg"
-                  value={formData.file}
-                  onChange={handleTextInputChange}
-                />
-              </div>
-            </div> */}
+            <div className="-space-y-px rounded-md shadow-sm">
+            <div>
+                <label htmlFor="profile-pic">Profile Picture (JPEG or PNG):</label>
+                <input type="file" id="profile-pic" accept="image/jpeg,image/png" required onChange={handleImageInputChange} />
+            </div>
+            </div>
             <div>
               <button
                 type="submit"

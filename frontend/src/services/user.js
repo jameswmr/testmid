@@ -10,9 +10,9 @@ export const user = {
     const { data } = await api.get("/users/chat");
     return data;
   },
-  async createOne({ name, password }) {
-    console.log(name,password);
-    const { data } = await api.post("/users", { name ,password});
+  async createOne({ name, password,image }) {
+    console.log(name,password,image);
+    const { data } = await api.post("/users", { name:name ,password:password, image: image});
     console.log(data);
     return data;
   },

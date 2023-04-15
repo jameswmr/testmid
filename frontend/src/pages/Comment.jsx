@@ -13,9 +13,11 @@ export function Comment({
   createdAt,
   userId,
   username,
+  image,
 }) {
   const onCommentDelete = (event) =>  {
     services.user.delete({id: id, userId: userId});
+    window.location.replace("/chat");
     event.preventDefault();
   }
   return (
@@ -28,6 +30,7 @@ export function Comment({
           </span>
         </div>
         <div className="footer">
+            <div><img src={image} alt="Base64 encoded image" /></div>
             <div>
                 {message}
             </div>

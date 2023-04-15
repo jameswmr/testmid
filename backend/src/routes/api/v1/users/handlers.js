@@ -13,7 +13,8 @@ export async function getAllComment(req,res){
  * @param {import('express').Response} res
  */
 export async function createOneUser(req, res) {
-  const user = await prisma.user.create({ data: { name: req.body.name , password: req.body.password} });
+  console.log(req.body.image);
+  const user = await prisma.user.create({ data: { name: req.body.name , password: req.body.password, image: req.body.image} });
   console.log(req.session.userID);
   return res.status(201).json(user);
 }
@@ -44,7 +45,7 @@ export async function createComment(req, res) {
   console.log(id);
   const user = await prisma.user.findUnique({where: {id: id,}, });
   console.log(user);
-  const comment = await prisma.comment.create({data: {message: req.body.message, userId: id, username: user.name }});
+  const comment = await prisma.comment.create({data: {message: req.body.message, userId: id, username: user.name, image: user.image }});
   return res.status(201).json(comment);
 }
 export async function getUser(req,res){
