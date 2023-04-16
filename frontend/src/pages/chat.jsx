@@ -15,7 +15,7 @@ function chat() {
   const handleTextInputChange = ({ target: { name, value } }) => {
     // const { name, value } = event.target
     // obj = { ...prev }; obj[name] = value
-    setFormData((prev) => ({
+    setFormData((prev) => ({  
       ...prev,
       [name]: value,
     }));
