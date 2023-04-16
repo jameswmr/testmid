@@ -5,8 +5,6 @@ import me from "./me.jpg"
 // you should design your register page and api
 function CreateUserPage() {
   const [formData, setFormData] = useState({ username: "", password: "", image:"" });
-  const [message, setMessage] = useState("");
-
   /** @type {React.ChangeEventHandler<HTMLInputElement>} */
   const handleTextInputChange = ({ target: { name, value } }) => {
     // const { name, value } = event.target

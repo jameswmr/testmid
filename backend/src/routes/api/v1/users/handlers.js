@@ -5,7 +5,9 @@ export async function getAllUsers(req, res) {
   return res.json(allUsers);
 }
 export async function getAllComment(req,res){
-  const allComment = await prisma.comment.findMany();
+  const allComment = await prisma.comment.findMany({
+  orderBy: { createdAt: 'desc' },
+  take: 10});
   return res.json(allComment);
 }
 /**
