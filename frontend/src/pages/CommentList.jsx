@@ -1,4 +1,4 @@
-import { Comment } from "./comment"
+import { Comment } from "./Comment"
 
 export function CommentList({ comments }) {
   return comments.map(comment => (
