@@ -1,6 +1,6 @@
 import services from "../services";
 import { useEffect, useState } from "react";
-import { CommentList } from "./commentlist"
+import { CommentList } from "./Commentlist"
 // you should design your register page and api
 function chat() {
   services.user.getID().then((data) => {
