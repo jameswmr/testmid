@@ -11,17 +11,17 @@ datasource db {
 }
 
 model User {
-  id      Int      @id @default(autoincrement())
+  id      String      @id @default(uuid())
   name    String   @unique
   password String
   image String
 }
 
 model Comment {
-  id Int @id@default(autoincrement())
+  id String @id@default(uuid())
   message String
   createdAt DateTime @default(now())
-  userId    Int
+  userId    String
   username String
   image String
 }

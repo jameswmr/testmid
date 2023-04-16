@@ -11,9 +11,7 @@ export const user = {
     return data;
   },
   async createOne({ name, password,image }) {
-    console.log(name,password,image);
     const { data } = await api.post("/users", { name:name ,password:password, image: image});
-    console.log(data);
     return data;
   },
   async getUser({id}){
@@ -25,12 +23,20 @@ export const user = {
     const { data } = await api.post("/users/name", {name, password});
     return data;
   },
-  async post({message, id}){
-    const { data } = await api.post("/users/chat", {message, id});
+  async post({message}){
+    const { data } = await api.post("/users/chat", {message});
     return data;
   },
   async delete({id,userId}){
     const {data} = await api.post("/users/delete", {id, userId});
+    return data;
+  },
+  async getID(){
+    const { data } = await api.get("/users/id");
+    return data;
+  },
+  async delID(){
+    const { data } = await api.get("/users/delid");
     return data;
   },
 };

@@ -1,10 +1,7 @@
+
 button {
     font-size: inherit;
     font-family: inherit;
-  }
-  
-  .error-msg {
-    color: hsl(0, 100%, 67%);
   }
   
   .comments-title {
@@ -14,80 +11,13 @@ button {
   .comment-form-row {
     display: flex;
     gap: .5rem;
-  }
-  
-  .message-input {
-    flex-grow: 1;
-    resize: none;
-    height: 70px;
-    border-radius: .5em;
-    padding: .5em;
-    font-size: inherit;
-    font-family: inherit;
-    border: 2px solid hsl(235, 50%, 74%);
-    line-height: 1.4;
-  }
-  
-  .message-input:focus {
-    border-color: hsl(235, 100%, 67%);
-    outline: none;
-  }
-  
-  .mt-4 {
-    margin-top: 1rem;
-  }
-  
-  .mt-1 {
-    margin-top: .25rem;
-  }
-  
+  } 
   .comment-stack {
     margin: .5rem 0;
   }
   
   .comment-stack:last-child {
     margin-bottom: 0;
-  }
-  
-  .nested-comments {
-    padding-left: .5rem;
-    flex-grow: 1;
-  }
-  
-  .nested-comments-stack {
-    display: flex;
-  }
-  
-  .collapse-line {
-    border: none;
-    background: none;
-    padding: 0;
-    width: 15px;
-    margin-top: .5rem;
-    position: relative;
-    cursor: pointer;
-    outline: none;
-    transform: translateX(-50%);
-  }
-  
-  .collapse-line:hover::before,
-  .collapse-line:focus-visible::before {
-    background-color: hsl(235, 100%, 60%);
-  }
-  
-  .collapse-line::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 1px;
-    background-color: hsl(235, 50%, 74%);
-    transition: background-color 100ms ease-in-out;
-  }
-  
-  .hide {
-    display: none;
   }
   
   .btn {
@@ -100,6 +30,8 @@ button {
     border-radius: .5em;
     font-size: .75em;
     cursor: pointer;
+    display:flex;
+    justify-content: flex-end;
   }
   
   .btn:hover,
@@ -113,37 +45,16 @@ button {
     padding: .25em;
     display: flex;
     align-items: center;
-  }
-  
-  .mr-1 {
-    margin-right: .25em;
+    width: 10%;
+    height: 10%;
   }
   
   .icon-btn:hover,
   .icon-btn:focus-visible {
     --color: hsl(var(--hue), 100%, 74%);
   }
-  
-  .icon-btn-active,
   .icon-btn.danger {
     --hue: 0;
-  }
-  
-  .icon-btn-active {
-    position: relative;
-  }
-  
-  .icon-btn-active::before {
-    content: "\00D7";
-    position: absolute;
-    font-size: .75em;
-    width: 1em;
-    height: 1em;
-    color: white;
-    background-color: var(--color);
-    border-radius: 50%;
-    bottom: .1em;
-    right: .1em;
   }
   
   .comment {
@@ -172,6 +83,7 @@ button {
   
   .comment .footer {
     display: flex;
+    
     gap: .5rem;
     margin-top: .5rem;
   }
@@ -182,4 +94,8 @@ button {
   
   .btn[disabled] {
     --color: hsl(var(--hue), 20%, 74%);
+  }
+  .message{
+    width: 70%;
+    word-wrap: break-word;
   }

@@ -5,8 +5,13 @@ import services from "../services";
 import me from "./me.jpg"
 // you should design your register page and api
 function signIn() {
+  services.user.getID().then((data) => {
+    if(data !== null){
+      alert("Already loged in");
+      window.location.replace("/chat");
+    }
+  })
   const [formData, setFormData] = useState({ username: "", password: "" });
-  const [message, setMessage] = useState("");
 
   /** @type {React.ChangeEventHandler<HTMLInputElement>} */
   const handleTextInputChange = ({ target: { name, value } }) => {
@@ -22,20 +27,19 @@ function signIn() {
   const handleFormSubmit = (event) => {
     console.log(formData.username, formData.password);
     services.user.check({ name: formData.username, password: formData.password  }).then((data) => {
-      if(data.password === formData.password){
-        console.log(data.password);
+      if (data === "User not found"){
+        alert(data);
+      }
+      else if(data === "Successfully log in"){
+        alert(data);
         window.location.replace("/chat");
       }
       else{
-        console.log("FFFFffff");
+        alert("Wrong password!");
       }
-      console.log(JSON.stringify(data, null, 2));
-      console.log("happy");
     });
-    console.log("hello");
     setFormData({ username: "", password: "" });
     event.preventDefault();
-    console.log("handle end");
   };
 
   return (
@@ -125,7 +129,7 @@ function signIn() {
               </button>
             </div>
           </form>
-          <a href="/create-user">Create</a>
+          <a href="/create-user" style={{ textDecoration: 'underline', color: "blue" }}>Create</a>
         </div>
       </div>
       {/* <pre>{message}</pre> */}

@@ -19,12 +19,21 @@ function CreateUserPage() {
   };
   /** @type {React.FormEventHandler<HTMLFormElement>} */
   const handleFormSubmit = (event) => {
+    if(formData.image.length>1000000){
+      alert("Photo size too large");
+      return;
+    }
     services.user.createOne({ name: formData.username, password: formData.password, image: formData.image  }).then((data) => {
-      setMessage(JSON.stringify(data, null, 2));
+      if(data === 0){
+        alert("This username is already registered!");
+      }
+      else{
+        alert("Successfully registered!");
+        window.location.replace("/sign-In");
+      }
     });
-    setFormData({ username: "", password: "" });
+    setFormData({ username: "", password: "", image: "" });
     event.preventDefault();
-    console.log("handle end");
   };
   function handleImageInputChange(event) {
     const reader = new window.FileReader();
@@ -37,7 +46,6 @@ function CreateUserPage() {
         ...prev,
         ["image"]: Base64Data,
       }));
-      console.log(Base64Data);
     };
   }
   return (
@@ -97,7 +105,7 @@ function CreateUserPage() {
             </div>
             <div className="-space-y-px rounded-md shadow-sm">
             <div>
-                <label htmlFor="profile-pic">Profile Picture (JPEG or PNG):</label>
+                <label htmlFor="profile-pic">Submit your photo</label>
                 <input type="file" id="profile-pic" accept="image/jpeg,image/png" required onChange={handleImageInputChange} />
             </div>
             </div>
@@ -116,7 +124,6 @@ function CreateUserPage() {
               </button>
             </div>
           </form>
-          <a href="/sign-In">SignIn</a>
         </div>
       </div>
       {/* <pre>{message}</pre> */}

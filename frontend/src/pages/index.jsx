@@ -6,11 +6,9 @@ import me from "./me.jpg"
 const navigation = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
-  { name: "Users", href: "/users" },
-  { name: "Create User", href: "/create-user" },
+  { name: "Sign in", href: "/sign-In" },
   { name: "Chat", href: "/chat"},
 ];
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -38,12 +36,12 @@ export default function RootLayout() {
                   <div className="flex flex-shrink-0 items-center">
                     <img
                       className="block h-8 w-auto lg:hidden"
-                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                      src={me}
                       alt="Your Company"
                     />
                     <img
                       className="hidden h-8 w-auto lg:block"
-                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                      src={me}
                       alt="Your Company"
                     />
                   </div>
@@ -69,13 +67,13 @@ export default function RootLayout() {
                   </div>
                 </div>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                  <button
+                  {/* <button
                     type="button"
                     className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                   >
                     <span className="sr-only">View notifications</span>
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
+                  </button> */}
 
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">
@@ -102,7 +100,7 @@ export default function RootLayout() {
                         <Menu.Item>
                           {({ active }) => (
                             <a
-                              href="#"
+                              href="/sign-out"
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"

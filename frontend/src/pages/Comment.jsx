@@ -16,8 +16,15 @@ export function Comment({
   image,
 }) {
   const onCommentDelete = (event) =>  {
-    services.user.delete({id: id, userId: userId});
-    window.location.replace("/chat");
+    services.user.delete({id: id, userId: userId}).then((data) =>{
+        if(data !== "no"){
+            window.location.replace("/chat");
+        }
+        else {
+            alert("You have no permission!");
+        }
+    });
+    
     event.preventDefault();
   }
   return (
@@ -30,9 +37,9 @@ export function Comment({
           </span>
         </div>
         <div className="footer">
-            <div><img src={image} alt="Base64 encoded image" /></div>
-            <div>
-                {message}
+            <div><img src={image} width="100px" height="100px" /></div>
+            <div className="message">
+                <p>{message}</p>
             </div>
             <IconBtn
                 onClick={onCommentDelete}

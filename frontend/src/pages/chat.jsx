@@ -3,6 +3,12 @@ import { useEffect, useState } from "react";
 import { CommentList } from "./commentlist"
 // you should design your register page and api
 function chat() {
+  services.user.getID().then((data) => {
+    if(data === null){
+      window.location.replace("/");
+        alert("Sign in first and wait a second");
+    }
+  })
   const [formData, setFormData] = useState({ message: "" });
 
   /** @type {React.ChangeEventHandler<HTMLInputElement>} */
@@ -18,15 +24,20 @@ function chat() {
   const [comment, setcomment] = useState([]);
   /** @type {React.FormEventHandler<HTMLFormElement>} */
   const handleFormSubmit = (event) => {
-    services.user.post({ message: formData.message  });
-    setFormData({ message : ""});
-    useEffect(() => {
-      services.user.getAllComment().then((allComment) => {
-        setcomment(allComment);
-      });
-    }, []);
+    if(formData.message === ""){
+      alert("Please comment first");
+    }
+    else{
+      services.user.post({ message: formData.message  });
+      setTimeout(function() {
+      setFormData({ message : ""});
+      window.location.replace("/chat");
+    }, 1000);
+  }
+
+    
+ 
     event.preventDefault();
-    console.log("handle end");
   };
 
 

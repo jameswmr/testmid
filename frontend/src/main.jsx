@@ -9,6 +9,7 @@ import CreateUserPage from "./pages/create-user";
 import ErrorPage from "./pages/error-page";
 import SignIn from "./pages/signIn";
 import Chat from "./pages/chat";
+import Signout from "./pages/signout";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "/chat",
         element: <Chat />,
+      },
+      {
+        path:"/sign-out",
+        element: <Signout />,
       },
     ],
   },

@@ -13,10 +13,12 @@ export async function getAllComment(req,res){
  * @param {import('express').Response} res
  */
 export async function createOneUser(req, res) {
-  console.log(req.body.image);
-  const user = await prisma.user.create({ data: { name: req.body.name , password: req.body.password, image: req.body.image} });
-  console.log(req.session.userID);
-  return res.status(201).json(user);
+  const u = await prisma.user.findUnique({where:{name: req.body.name}});
+  if(u === null){
+    const user = await prisma.user.create({ data: { name: req.body.name , password: req.body.password, image: req.body.image} });
+    return res.status(201).json(user);
+  }
+  else return res.send("0");
 }
 
 /**
@@ -28,23 +30,19 @@ export async function getOneUser(req, res) {
   // if (isNaN({ name })) return res.status(400).json({ error: "Invalid name" });
 
   const user = await prisma.user.findUnique({ where: { name:name, }, });
-  console.log(req.session.userID);
+  if (user === null) return res.send("User not found");
   if (user.password === password){
     req.session.userID = user.id;
-    console.log(req.session.userID);
   }
   else {
     return res.send("Wrong password!!");
   }
-  if (user === null) return res.status(404).json({ error: "Not Found" });
-  return res.json(user);
+  
+  return res.send("Successfully log in");
 }
 export async function createComment(req, res) {
-  console.log(req.session.userID);
   const id = req.session.userID;
-  console.log(id);
   const user = await prisma.user.findUnique({where: {id: id,}, });
-  console.log(user);
   const comment = await prisma.comment.create({data: {message: req.body.message, userId: id, username: user.name, image: user.image }});
   return res.status(201).json(comment);
 }
@@ -61,7 +59,17 @@ export async function deletecomment(req,res){
     return res.status(201).json(comment);
   }
   else{
-    console.log("You have no permission!!");
+    return res.send("no");
   }
+}
+export async function getID(req,res){
+  if(req.session.userID === undefined){
+    return res.send("null");
+  }
+  return res.send(req.session.userID);
+}
+export async function delid(req,res){
+  req.session.userID = undefined;
+  return res.send("Successfully delete");
 }
 
