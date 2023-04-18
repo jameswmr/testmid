@@ -19,7 +19,6 @@ export const user = {
     return data;
   },
   async check({name, password}){
-    console.log("check",{name});
     const { data } = await api.post("/users/name", {name, password});
     return data;
   },

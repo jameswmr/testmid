@@ -11,6 +11,7 @@ function signIn() {
       window.location.replace("/chat");
     }
   })
+  
   const [formData, setFormData] = useState({ username: "", password: "" });
 
   /** @type {React.ChangeEventHandler<HTMLInputElement>} */
@@ -21,11 +22,21 @@ function signIn() {
       ...prev,
       [name]: value,
     }));
-    console.log(name,value);
   };
   /** @type {React.FormEventHandler<HTMLFormElement>} */
   const handleFormSubmit = (event) => {
-    console.log(formData.username, formData.password);
+    if(formData.username.length>20){
+      alert("Name length too large");
+      setFormData({ username: "", password: ""});
+      event.preventDefault();
+      return;
+    }
+    if(formData.password.length>20){
+      alert("Password length too large");
+      setFormData({ username: "", password: ""});
+      event.preventDefault();
+      return;
+    }
     services.user.check({ name: formData.username, password: formData.password  }).then((data) => {
       if (data === "User not found"){
         alert(data);

@@ -1,5 +1,8 @@
 import { prisma } from "../../../../adapters";
-
+import bcrypt from 'bcryptjs';
+function comparePasswords(a, b) {
+  return bcrypt.compareSync(b, a);
+}
 export async function getAllUsers(req, res) {
   const allUsers = await prisma.user.findMany();
   return res.json(allUsers);
@@ -31,9 +34,9 @@ export async function getOneUser(req, res) {
   const { name, password } = req.body;
   // if (isNaN({ name })) return res.status(400).json({ error: "Invalid name" });
 
-  const user = await prisma.user.findUnique({ where: { name:name, }, });
+  const user = await prisma.user.findUnique({ where: { name:name } });
   if (user === null) return res.send("User not found");
-  if (user.password === password){
+  if (comparePasswords(user.password,password)){
     req.session.userID = user.id;
   }
   else {
@@ -44,7 +47,8 @@ export async function getOneUser(req, res) {
 }
 export async function createComment(req, res) {
   const id = req.session.userID;
-  const user = await prisma.user.findUnique({where: {id: id,}, });
+  const user = await prisma.user.findUnique({where: {id: id} });
+  if(user === null) return res.send("Safe");
   const comment = await prisma.comment.create({data: {message: req.body.message, userId: id, username: user.name, image: user.image }});
   return res.status(201).json(comment);
 }

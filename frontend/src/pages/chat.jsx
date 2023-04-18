@@ -19,7 +19,6 @@ function chat() {
       ...prev,
       [name]: value,
     }));
-    console.log(name,value);
   };  
   const [comment, setcomment] = useState([]);
   /** @type {React.FormEventHandler<HTMLFormElement>} */
@@ -29,9 +28,10 @@ function chat() {
     }
     else{
       services.user.post({ message: formData.message  });
-      setTimeout(function() {
       setFormData({ message : ""});
-      window.location.replace("/chat");
+      setTimeout(function() {
+      
+      window.location.reload();
     }, 1000);
   }
 

@@ -2,8 +2,16 @@ import { LockClosedIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import services from "../services";
 import me from "./me.jpg"
+import bcrypt from 'bcryptjs';
 // you should design your register page and api
 function CreateUserPage() {
+  
+
+  function encryptPassword(password) {
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, salt);
+    return hash;
+  }
   const [formData, setFormData] = useState({ username: "", password: "", image:"" });
   /** @type {React.ChangeEventHandler<HTMLInputElement>} */
   const handleTextInputChange = ({ target: { name, value } }) => {
@@ -13,15 +21,28 @@ function CreateUserPage() {
       ...prev,
       [name]: value,
     }));
-    console.log(name,value);
   };
   /** @type {React.FormEventHandler<HTMLFormElement>} */
   const handleFormSubmit = (event) => {
-    if(formData.image.length>1000000){
+    if(formData.image.length>2000000){
       alert("Photo size too large");
+      setFormData({ username: "", password: "", image: "" });
+      event.preventDefault();
       return;
     }
-    services.user.createOne({ name: formData.username, password: formData.password, image: formData.image  }).then((data) => {
+    if(formData.username.length>20){
+      alert("Name length too large");
+      setFormData({ username: "", password: "", image: "" });
+      event.preventDefault();
+      return;
+    }
+    if(formData.password.length>20){
+      alert("Password length too large");
+      setFormData({ username: "", password: "", image: "" });
+      event.preventDefault();
+      return;
+    }
+    services.user.createOne({ name: formData.username, password: encryptPassword(formData.password), image: formData.image  }).then((data) => {
       if(data === 0){
         alert("This username is already registered!");
       }
